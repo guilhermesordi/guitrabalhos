@@ -1,29 +1,34 @@
 <template>
  <div class='container'>
-   <div class='title'>Login</div>
-   <p></p>
-   <input class='button' v-model="login" placeholder='Login'>
-   <p></p>
-   <input class='button' v-model="senha" placeholder='Senha'>
-   <p></p>
-   <button v-on:click="checkLogin(login,senha)">Fazer Login</button>
-
+   <div id="login" v-if="logged == 0">
+    <div class='title'>Login</div>
+    <p></p>
+    <input class='button' v-model="login" placeholder='Login'>
+    <p></p>
+    <input class='button' v-model="senha" placeholder='Senha'>
+    <p></p>
+    <button v-on:click="logged=checkLogin(login, senha)">Fazer Login</button>
+  </div> 
+  <ai v-if="logged==2"></ai>
+  <ui v-if="logged==1"></ui>
  </div>
 </template>
 
 <script>
-  import abritela from './components/ui'
+  import ui from './components/ui.vue'
   import checkLogin from './components/telalogin'
+  import ai from './components/ai.vue'
 
   export default {
+  components: { ai, ui },
     data() {
         return {
           login : "",
-          senha : ""
+          senha : "",
+          logged : ""
         }
     },
     methods: {
-      abritela,
       checkLogin
     },
 }
