@@ -1,20 +1,25 @@
-var aiLogin = "admin";
-var aiSenha = "admin123";
-var uiLogin = "123";
-var uiSenha = "123";
+let usuarios = []
+let admin = [{name: admin,senha: admin}]
 
 
-function checkLogin(login, senha){
-    if(login == aiLogin && senha == aiSenha){
-        return 2;
-    }
-    if(login == uiLogin && senha == uiSenha){
-        return 1;
-    }
-    else if((login != uiLogin && senha != uiSenha) && (login != aiLogin && senha != aiSenha)){
-        alert("Credencias incorretas")
-        return 0;
-    }
+export function eventListener(usuariosgay) {
+
+    usuarios=usuariosgay
+
 }
 
-export default checkLogin
+export function checkLogin(login, senha){
+    for(var i = 0; i < usuarios.length; i++){
+        console.log(usuarios[i])
+        if(login == admin[i].name && senha == admin[i].senha){
+            return 2;
+        }
+        if(login == usuarios[i].name && senha == usuarios[i].senha){
+            return 1;
+        }
+        else if((login != usuarios[i].name && senha != usuarios[i].senha) && (login != usuarios[i].name && senha != usuarios[i].senha)){
+            alert("Credencias incorretas")
+            return 0;
+        }
+    }
+}
