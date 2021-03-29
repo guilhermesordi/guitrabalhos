@@ -17,14 +17,28 @@
         </div>
         <!-- Caso não esteje em Home: -->
         <div v-if="pagina!=1">
-            <div class="title" id="telaAdmin" v-if="pagina==2">
-                Tela do Admin
-                
+            <div id="telaAdmin" v-if="pagina==2">
+                <div class="title">
+                    Tela do Admin
+                </div>
+                <p />
+                <div class="text" v-for="(data, index) in users" :key="index">
+                    <div class="text--left">
+                        {{data.name}}
+                    </div>
+                    <div class="text--right">
+                        <button class="button--adm" @click="beAdm(index)">Adm</button>
+                    </div>
+                </div>
+                <!-- <button class="button" @click="beAdm()">
+                    Adicionar Admin
+                </button> -->
             </div>
+
             <div class="title" id="telaUser" v-if="pagina==3">
                 Tela do Usuário
             </div>
-            <p />
+
             <div class="title" id="telaCreate" v-if="pagina==4">
                 Criar Conta
                 <p />
@@ -36,6 +50,7 @@
                 <p />
                 <button class="button" @click="checkCreate()">Criar</button>
             </div>
+
             <p />
             <button class="button" @click="home()">Home</button>
         </div>
@@ -54,7 +69,10 @@ export default {
         pass2: "", 
         pagina: 1,
         users: [],
-        admin: "admin"
+        admin: [{
+            name:"admin",
+            pass:"admin"
+        }]
     };
   },
 
@@ -69,11 +87,13 @@ export default {
                 return
             }
         }
-        if(this.login == this.admin && this.senha == this.admin){
-            this.pagina = 2;
-            this.login = "";
-            this.senha = "";
-            return
+        for(let i = 0; i < this.admin.length; i++){
+            if(this.login == this.admin[i].name && this.senha == this.admin[i].pass){
+                this.pagina = 2;
+                this.login = "";
+                this.senha = "";
+                return
+            }
         }
         alert("Crendenciais incorretas!")
         
@@ -95,6 +115,10 @@ export default {
         this.login1 = "";
         this.pass1 = "";
         this.pass2 = "";
+    },
+    beAdm(index){
+        this.admin.push(this.users[index])
+        this.users.splice(index,1)
     }
   },
 };
@@ -107,30 +131,66 @@ body {
   background-color: #373435;
 }
 
+#telaAdmin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .container {
-  text-align: center;
-  align-content: center;
+    text-align: center;
+    align-content: center;
 }
 
 .title {
-  font-size: 1.5em;
-  color: white;
-  font-family: "Roboto Mono", monospace;
-  font-weight: 600;
+    font-size: 1.5em;
+    color: white;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 600;
+}
+
+.text {
+    color: white;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 600;
+    flex-direction: row;
+    display: flex;
+    width: 40%;
+}
+
+.text--left {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.text--right {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
 }
 
 .input {
-  padding: 6px;
-  border-radius: 10px;
-  align-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    align-content: center;
 }
 
 .button {
-  font-family: "Roboto Bold", monospace;
-  font-weight: 800;
-  color: black;
-  background-color: white;
-  padding: 6px;
-  border-radius: 10px;
+    font-family: "Roboto Bold", monospace;
+    font-weight: 800;
+    color: black;
+    background-color: white;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.button--adm {
+    font-family: "Roboto Bold", monospace;
+    font-weight: 800;
+    color: black;
+    background-color: white;
+    padding: 3px;
+    border-radius: 10px;
 }
 </style>
